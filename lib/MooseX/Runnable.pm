@@ -8,7 +8,7 @@ sub run_as_application {
     my @args = @_;
 
     if($class->does('MooseX::Getopt')){
-        my $self = $class->new_with_options;
+        my $self = $class->new_with_options(@args);
         exit $self->run( $self->extra_argv );
     }
 

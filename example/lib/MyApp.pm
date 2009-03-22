@@ -2,7 +2,7 @@ package MyApp;
 use Moose;
 use feature ':5.10';
 
-with 'Eventful', 'Eventful::Loop', 'Eventful::Debug';
+with 'Eventful', 'Eventful::Loop', 'Eventful::Debug', 'Eventful::Component::REPL';
 
 sub build_name { 'MyApp' };
 
@@ -12,19 +12,11 @@ sub setup {
 
     $self->add_watcher(
         AnyEvent->timer(
-            after => 1, interval => 1, cb => sub {
+            after => 1, interval => 5, cb => sub {
                 say 'Still alive: '. AnyEvent->now;
             },
         ),
-        AnyEvent->timer(
-            after => 5, cb => sub {
-                warn 'Exiting.';
-                $self->unloop(0);
-            },
-        ),
     );
-
-
 }
 
 sub start {

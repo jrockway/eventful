@@ -1,7 +1,7 @@
 package Eventful;
 use Moose::Role;
 
-with 'MooseX::Runnable', 'MooseX::Getopt';
+with 'MooseX::Runnable';
 
 has 'name' => (
     traits  => ['NoGetopt'],
@@ -22,11 +22,14 @@ sub run {
     $self->setup;
     $self->start;
     $self->cleanup;
-    return $self->exit_code;
+    return $self->end;
 }
 
+# these functions don't take arguments; communicate with instance
+# state.
 requires 'setup';
 requires 'start';
 requires 'cleanup';
+requires 'end';
 
 1;
